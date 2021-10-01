@@ -2,9 +2,9 @@ package com.stocked.entities;
 
 public class Product {
 
-    private int id;
+    private final int id;
     private int position;
-    private int value;
+    private final int value;
 
     Product(int id, int position, int value){
         this.position = position;
