@@ -1,24 +1,19 @@
 package com.stocked.entities;
 
+import com.stocked.utils.Alarm;
 import com.stocked.utils.Logger;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class Stock {
 
-    private static Stock instance;
-    public static int maxSize = 25;
-    private static final Stack<Product> content = new Stack<>();
-    private static Boolean fullAlert = false;
-    private static Boolean emptyAlert = true;
-    private static final ArrayList<Consumer> consumerQueue = new ArrayList<>();
-    private static final ArrayList<Producer> producerQueue = new ArrayList<>();
-
-    public Stock(int maxSize){
-        this.maxSize = maxSize;
-        instance = this;
-    }
+    private int maxSize = 25;
+    private int status = 0;
+    protected final Stack<Product> content = new Stack<>();
+    private final LinkedList<Consumer> consumerQueue = new LinkedList<>();
+    private final LinkedList<Producer> producerQueue = new LinkedList<>();
 
     //Push au stock depuis un producteur
     public Boolean push(Product product){
@@ -28,10 +23,15 @@ public class Stock {
         } else if(!producerQueue.isEmpty()) {
             Logger.fine("Stock was successfully pushed from queue.");
             content.push(producerQueue.get(producerQueue.size()-1).getPendingProduct());
+            producerQueue.removeFirst();
+            this.displayLast();
+            Alarm.checkStatus();
             return false;
         } else {
             Logger.fine("Stock was successfully pushed.");
             content.push(product);
+            this.displayLast();
+            Alarm.checkStatus();
             return true;
         }
     }
@@ -45,7 +45,8 @@ public class Stock {
             Logger.fine("Stock was successfully pushed.");
             Product product = new Product(id, content.size(), value);
             content.push(product);
-            System.out.println(content.size());
+            this.displayLast();
+            Alarm.checkStatus();
             return true;
         }
     }
@@ -58,11 +59,15 @@ public class Stock {
         } else if(!consumerQueue.isEmpty()) {
             Logger.fine("Stock was successfully poped from queue.");
             content.pop();
-            consumerQueue.remove(consumerQueue.size()-1);
+            this.displayLast();
+            consumerQueue.removeFirst();
+            Alarm.checkStatus();
             return false;
         } else {
             Logger.fine("Stock was successfully poped.");
             content.pop();
+            this.displayLast();
+            Alarm.checkStatus();
             return true;
         }
     }
@@ -75,14 +80,17 @@ public class Stock {
         } else {
             Logger.fine("Stock was successfully cleared.");
             content.clear();
+            Alarm.checkStatus();
             return true;
         }
     }
 
-    public String getStatus(){
-        if(fullAlert) return "Full or nearly full";
-        if(emptyAlert) return "Empty or nearly empty";
-        return "Everything is fine";
+    private void displayLast(){
+        if(this.content.size() > 0) {
+            System.out.println("Product ID: "+this.content.get(this.content.size()-1).getId()+" with value: "+this.content.get(this.content.size()-1).getValue());
+        } else {
+            System.out.println("No product in Stock.");
+        }
     }
 
     public void addToConsumerQueue(Consumer consumer) {
@@ -93,19 +101,35 @@ public class Stock {
         producerQueue.add(producer);
     }
 
-    public static ArrayList<Consumer> getConsumerQueue() {
+    public int getStatus(){
+        return this.status;
+    }
+
+    public LinkedList<Consumer> getConsumerQueue() {
         return consumerQueue;
     }
 
-    public static ArrayList<Producer> getProducerQueue() {
+    public LinkedList<Producer> getProducerQueue() {
         return producerQueue;
-    }
-
-    public static Stock getInstance() {
-        return instance;
     }
 
     public Product getLastContent(){
         return content.lastElement();
+    }
+
+    public int getMaxSize(){
+        return maxSize;
+    }
+
+    public Stack<Product> getContent() {
+        return content;
+    }
+
+    public void setStatus(int status){
+        this.status = status;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 }

@@ -35,6 +35,10 @@ public class Logger {
         logger.severe(msg);
     }
 
+    public static void warning(String msg){
+        logger.warning(msg);
+    }
+
     public static void fine(String msg){
         logger.fine(msg);
     }

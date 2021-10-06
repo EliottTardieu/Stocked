@@ -1,18 +1,19 @@
 package com.stocked.entities;
 
+import com.stocked.App;
 import com.stocked.utils.Logger;
 
 public class Producer {
 
-    private int id;
-    private String name;
-    private static final Stock stock = Stock.getInstance();
-    private Product pendingProduct;
+    private final int id;
+    private final String name;
+    private Product pendingProduct = null;
+    private final Stock stock;
 
     Producer(int id, String name){
         this.id = id;
         this.name = name;
-        this.pendingProduct = null;
+        this.stock = App.getInstance().getStock();
     }
 
     private void produce(Product product){

@@ -1,16 +1,18 @@
 package com.stocked.entities;
 
+import com.stocked.App;
 import com.stocked.utils.Logger;
 
 public class Consumer {
 
-    private int id;
-    private String name;
-    private static final Stock stock = Stock.getInstance();
+    private final int id;
+    private final String name;
+    private final Stock stock;
 
     Consumer(int id, String name){
         this.id = id;
-        this. name = name;
+        this.name = name;
+        this.stock = App.getInstance().getStock();
     }
 
     private void pop(){
