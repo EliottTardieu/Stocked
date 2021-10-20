@@ -1,0 +1,5 @@
+package com.stocked.entities.stock;
+
+public enum StockStatus {
+    STATUS_ALLOWED, STATUS_DENIED, STATUS_QUEUED, STATUS_FULL, STATUS_EMPTY, STATUS_STANDARD, STATUS_FASTFULL, STATUS_FASTEMPTY
+}

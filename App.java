@@ -1,21 +1,23 @@
 package com.stocked;
 
-import com.stocked.entities.Stock;
-import com.stocked.entities.StockReader;
+import com.stocked.entities.stock.StockController;
+import com.stocked.entities.stock.StockReader;
 
 public class App {
 
-    private static App instance;
-    private final Stock stock;
+    private static App instance = null;
+    private final StockController stock;
     private final StockReader stockReader;
 
     public App(){
-        this.stock = new Stock();
-        instance = this;
         this.stockReader = new StockReader();
+        this.stock = new StockController();
+        instance = this;
     }
 
     public void init(int maxSize){
+        this.stockReader.init();
+        this.stock.init();
         stock.setMaxSize(maxSize);
     }
 
@@ -27,7 +29,7 @@ public class App {
         return stockReader;
     }
 
-    public Stock getStock() {
+    public StockController getStock() {
         return stock;
     }
 }
