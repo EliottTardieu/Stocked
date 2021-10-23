@@ -45,7 +45,7 @@ public class StockReader {
     }
 
     private void displayLast(){
-        if(stock.getContent().size()+1 > 0) {
+        if(stock.getContent().size() > 0) {
             System.out.println("Product ID: "+stock.getContent().lastElement().getId()+" with value: "+stock.getContent().lastElement().getValue());
         } else {
             System.out.println("No product in Stock.");

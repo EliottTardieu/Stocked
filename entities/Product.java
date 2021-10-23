@@ -11,7 +11,7 @@ public class Product {
     private final UUID id;
     private final int value;
     public Producer[] producers;
-    private ArrayList<Integer> timer;  //Index 0 et 1: Heure et minute du Push; Index 2 et 3: Heure et minute du pop
+    private ArrayList<Integer> timer = new ArrayList<>();  //Index 0 et 1: Heure et minute du Push; Index 2 et 3: Heure et minute du pop
 
     public Product(int value, Producer... producers){
         this.id = UUID.randomUUID();

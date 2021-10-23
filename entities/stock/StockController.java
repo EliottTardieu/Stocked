@@ -18,7 +18,7 @@ public class StockController implements Observable{
     private final Stack<Product> content = new Stack<>();
     private Stack<Product> history = new Stack<>();
     private StockReader view;
-    private Alarm alarm = new Alarm();
+    private Alarm alarm;
 
     private final ArrayList<Object> observers = new ArrayList<>();
     private final LinkedList<Consumer> consumerQueue = new LinkedList<>();
@@ -27,6 +27,7 @@ public class StockController implements Observable{
 
     public void init(){
         this.view = App.getInstance().getStockReader();
+        this.alarm = new Alarm();
     }
 
     @Override
@@ -189,8 +190,25 @@ public class StockController implements Observable{
         return history;
     }
 
+    public ArrayList<Consumer> getConsumers(){
+        ArrayList<Consumer> toReturn = new ArrayList<>();
+        for(Object o : this.observers){
+            if(o.getClass() == Consumer.class) toReturn.add((Consumer) o);
+        }
+        return toReturn;
+    }
+
+    public ArrayList<Producer> getProducers(){
+        ArrayList<Producer> toReturn = new ArrayList<>();
+        for(Object o : this.observers){
+            if(o.getClass() == Producer.class) toReturn.add((Producer) o);
+        }
+        return toReturn;
+    }
+
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
     }
+
 
 }

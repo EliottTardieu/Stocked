@@ -8,13 +8,14 @@ import com.stocked.utils.Logger;
 public class Alarm {
 
     private StockController stock;
-    private Object strategy = new AlarmS1();    //Default strategy set to S1
+    private Object strategy;
 
     public Alarm(){
         this.stock = App.getInstance().getStock();
     }
 
     public void checkStatus(){
+        if(strategy == null) this.strategy = new AlarmS1();  //Default strategy set to S1
         StockStatus status = StockStatus.STATUS_STANDARD;
         if(strategy.getClass() == AlarmS1.class){
             status = ((AlarmS1)strategy).checkStatus();
