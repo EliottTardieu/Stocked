@@ -11,16 +11,16 @@ import java.util.logging.LogRecord;
 public class LogFormatter extends Formatter  {
 
     // ANSI escape code
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-    public static final String ANSI_PINK = "\u001B[1;35m";
+    public static final String ANSI_RESET = "\033[0m";
+    public static final String ANSI_BLACK = "\033[30m";
+    public static final String ANSI_RED = "\033[31m";
+    public static final String ANSI_GREEN = "\033[32m";
+    public static final String ANSI_YELLOW = "\033[33m";
+    public static final String ANSI_BLUE = "\033[34m";
+    public static final String ANSI_PURPLE = "\033[35m";
+    public static final String ANSI_CYAN = "\033[36m";
+    public static final String ANSI_WHITE = "\033[37m";
+    public static final String ANSI_PINK = "\033[1;35m";
 
     // Here you can configure the format of the output and
     // its color by using the ANSI escape codes defined above.
@@ -31,7 +31,13 @@ public class LogFormatter extends Formatter  {
         // This example will print date/time, class, and log level in yellow,
         // followed by the log message and it's parameters in white .
         StringBuilder builder = new StringBuilder();
-        builder.append(getLogLevelColor(record.getLevel()));
+        /** To get Colors (Not working)
+         * builder.append("$");
+         * builder.append("{");
+         * builder.append(getLogLevelColor(record.getLevel()));
+         * builder.append("}");
+         */
+
 
         builder.append("[");
         builder.append(new SimpleDateFormat("yyyy-dd-MM HH:mm:ss").format(new Date(record.getMillis())));
@@ -64,9 +70,12 @@ public class LogFormatter extends Formatter  {
             builder.append(sw.toString());
         }
 
-
-
-        builder.append(ANSI_RESET);
+        /** To get Colors (Not working)
+         * builder.append("$");
+         * builder.append("{");
+         * builder.append(ANSI_RESET);
+         * builder.append("}");
+         */
         builder.append("\n");
         return builder.toString();
     }

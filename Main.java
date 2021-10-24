@@ -9,7 +9,6 @@ import com.stocked.entities.stock.StockController;
 import com.stocked.entities.stock.StockReader;
 import com.stocked.utils.Logger;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -27,9 +26,9 @@ public class Main {
         Boolean stop = false;
 
         //To always add producer/consumer/products at the beginning, might not be useful.
-        Producer producer1 = new Producer( "Pat");
-        Product prod = new Product(25, producer1);
-        producer1.produce(prod);
+        //Producer producer1 = new Producer( "Pat");
+        //Product prod = new Product(25, producer1);
+        //producer1.produce(prod);
 
 
         while (!stop) {
